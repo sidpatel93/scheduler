@@ -36,8 +36,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={daySelected}
-            setDay={setdaySelected}
+            value={daySelected}
+            onChange={setdaySelected}
           />
         </nav>
         <img
