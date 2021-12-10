@@ -6,23 +6,34 @@ const useVisualMode = (initialMode) => {
 
   const transition = (newMode, replace = false) => {
     if(replace) {
-      history[history.length-1] = newMode
+      setHistory(chanageLastEle(history, newMode))
     } else {
-       history.push(newMode)
-      //setHistory([...history, newMode])
+      setHistory(addEle(history, newMode))
     }
-    setHistory(history)
     setMode(history[history.length - 1])
   }
 
   const back =() => {
     if(history.length > 1) {
-      history.pop()
-      setHistory(history)
+      setHistory(removeLastEle(history))
       setMode(history[history.length - 1])
     }
   }
   return {mode, transition, back}
+}
+
+const chanageLastEle = (arr, newEle) => {
+  arr[arr.length -1] = newEle
+  return arr
+}
+const removeLastEle = (arr) => {
+  arr.pop()
+  return arr
+}
+
+const addEle = (arr, newEle) => {
+  arr.push(newEle)
+  return arr
 }
 
 export default useVisualMode;
