@@ -22,7 +22,8 @@ const Appointment = (props) => {
       interviewer
     };
     bookInterview(props.id, interview)
-    transition(SHOW)
+    .then(()=>transition(SHOW))
+
   }
 
 
