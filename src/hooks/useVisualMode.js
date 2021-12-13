@@ -30,7 +30,6 @@ const removeLastEle = (arr) => {
   arr.pop()
   return arr
 }
-
 const addEle = (arr, newEle) => {
   arr.push(newEle)
   return arr
