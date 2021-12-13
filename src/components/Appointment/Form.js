@@ -3,7 +3,7 @@ import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
 const Form = (props) => {
-  const {interviewers, onSave, onCancel, save, name} = props
+  const {interviewers, onSave, onCancel, save} = props
 
   const [student, setStudent] = useState(props.student || "")
   const [interviewer, setInterviewer] = useState(props.interviewer || null)
