@@ -11,19 +11,38 @@ const useApplicationData = () => {
     interviewers: {}
   })
 
-  const updateSpots = (id, toAdd) => {
+  // const updateSpots = (id, toAdd) => {
+  //   const day = state.days.find((day)=> day.appointments.includes(id))
+  //   toAdd ? day.spots -= 1 : day.spots += 1
+  //   const days = state.days.map((singleDay) => {
+  //     if(singleDay.name === day.name) {
+  //       return {...day, spots: day.spots}
+  //     }
+  //     else {
+  //       return {...singleDay}
+  //     }
+  //   })
+  //   return days
+  // }
+
+  const updateSpots = function (state, appointments, id) {
+
     const day = state.days.find((day)=> day.appointments.includes(id))
-    toAdd ? day.spots -= 1 : day.spots += 1
-    const days = state.days.map((singleDay) => {
+
+    const emptyAppointments = day.appointments.filter((appointmentId)=>{
+        return appointments[appointmentId].interview === null
+      }
+    )
+    const newDays = state.days.map((singleDay) => {
       if(singleDay.name === day.name) {
-        return {...day, spots: day.spots}
+        return {...singleDay, spots: emptyAppointments.length }
       }
       else {
         return {...singleDay}
       }
     })
-    return days
-  }
+    return newDays
+};
 
   function cancelInterview(id) {
     const appointment = {
@@ -37,7 +56,7 @@ const useApplicationData = () => {
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
     .then(res => console.log(res))
     .then(() => {
-      const days = updateSpots(id)
+      const days = updateSpots(state,appointments,id)
       setState({
         ...state, appointments, days
       })
@@ -56,7 +75,7 @@ const useApplicationData = () => {
     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview: interview})
     .then(res => console.log(res))
     .then(() => {
-      const days = updateSpots(id, true)
+      const days = updateSpots(state,appointments,id)
       setState({...state, appointments, days})
     })
   }
